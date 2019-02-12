@@ -5,7 +5,8 @@
         <div class="col-12">
           <h1>
             Abundantia <br>
-            <small>GeekHunter code challenge</small>
+            <small>GeekHunter code challenge </small>
+            <h6>by Nilton Teixeira</h6>
           </h1>
         </div>
       </div>
@@ -30,23 +31,42 @@
 import axios from '~/plugins/axios'
 
 export default {
-  async asyncData({ params }) {
-    const { currencies } = await axios.get(`currencies/`)
-    return { currencies: currencies }
+  async asyncData({ req, params }) {
+    const { data } = await axios.get(`currencies/`)
+    const currencies = data.results
+
+    const quotationsData = []
+    for (let i = 0; i < currencies.length; i++) {
+      const currency = currencies[i]
+      axios.get(`currencies/` + currency.code + `/quotations`).then((response) => {
+        quotationsData[i] = response.data
+      })
+    }
+
+    const analyticsData = []
+    for (let i = 0; i < currencies.length; i++) {
+      const currency = currencies[i]
+      axios.get(`currencies/` + currency.code + `/analytics`).then((response) => {
+        analyticsData[i] = response.data
+      })
+    }
+
+    return { currencies: data.results, quotations: quotationsData, analyticsData: analyticsData }
   },
   components: {
 
   },
   data() {
     return {
-      title: 'Abundantia - GeekHunter Code Challenge'
+      title: 'Abundantia - GeekHunter Code Challenge',
+      analytics: [],
+      currencies: []
     }
   },
   head() {
     return {
       title: this.title,
       meta: [
-        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
         { hid: 'description', name: 'description', content: 'GeekHunter Code Challenge' }
       ]
     }
