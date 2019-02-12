@@ -1,72 +1,58 @@
 <template>
   <section class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        geekhunter_code_challenge_front
-      </h1>
-      <h2 class="subtitle">
-        Geek Hunter Front-End Code Challenge
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+    <header class="text-center">
+      <div class="row">
+        <div class="col-12">
+          <h1>
+            Abundantia <br>
+            <small>GeekHunter code challenge</small>
+          </h1>
+        </div>
       </div>
-    </div>
+    </header>
+    <main>
+      <div v-for="currency in currencies" :key="currency.code" class="row currency-container">
+        <div class="col-12">
+          <h3>{{ currency.name }}</h3>
+        </div>
+        <div class="col-9">
+
+        </div>
+        <div class="col-3">
+
+        </div>
+      </div>
+    </main>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import axios from '~/plugins/axios'
 
 export default {
+  async asyncData({ params }) {
+    const { currencies } = await axios.get(`currencies/`)
+    return { currencies: currencies }
+  },
   components: {
-    Logo
+
+  },
+  data() {
+    return {
+      title: 'Abundantia - GeekHunter Code Challenge'
+    }
+  },
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        { hid: 'description', name: 'description', content: 'GeekHunter Code Challenge' }
+      ]
+    }
   }
 }
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
