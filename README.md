@@ -1,7 +1,9 @@
 # geekhunter_code_challenge_front
 
 > Geek Hunter Front-End Code Challenge
-> Can be found at: ec2-18-217-23-219.us-east-2.compute.amazonaws.com
+
+
+Can be found at: ec2-18-217-23-219.us-east-2.compute.amazonaws.com
 
 ## Build Setup
 
