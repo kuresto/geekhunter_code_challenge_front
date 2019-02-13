@@ -69,5 +69,8 @@ module.exports = {
         })
       }
     }
+  },
+  env: {
+    baseUrl: 'http://ec2-3-17-129-246.us-east-2.compute.amazonaws.com/'
   }
 }
